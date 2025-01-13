@@ -32,9 +32,12 @@ body {
     text-align: center;
     background-color: var(--container-bg);
     padding: 2rem;
+    padding-top: 4rem;
     border-radius: 10px;
     box-shadow: 0 0 10px var(--shadow-color);
     position: relative;
+    width: 400px;
+    max-width: 90%;
 }
 
 .timer {
@@ -45,29 +48,32 @@ body {
 
 .controls {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    justify-content: center;
+    gap: 1.5rem;
     margin-bottom: 1rem;
     width: 100%;
 }
 
 .controls button {
-    font-size: 1.2rem;
-    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    padding: 0.6rem 0.8rem;
     cursor: pointer;
     color: white;
     border: none;
     border-radius: 5px;
+    width: 100px;
+    flex: 0 0 auto;
 }
 
 .timer-controls {
     display: flex;
     gap: 0.5rem;
     width: 100%;
+    flex-direction: row;
 }
 
-#start, #pause {
-    flex: 1;
+#start, #pause, #reset {
+    flex: 0 0 auto;
 }
 
 #mode-toggle {
@@ -96,28 +102,27 @@ body {
 }
 
 #start {
-    background-color: #4CAF50;
+    background-color: #007bff;
 }
 
 #start:hover {
-    background-color: #3b9a40;
+    background-color: #0056b3;
 }
 
 #pause {
-    background-color: #ffa500;
+    background-color: #FFD93D;
 }
 
 #pause:hover {
-    background-color: #ff8c00;
+    background-color: #e7c800;
 }
 
 #reset {
-    background-color: #dc3545;
-    width: 100%;
+    background-color: #6c757d;
 }
 
 #reset:hover {
-    background-color: #c82333;
+    background-color: #5a6268;
 }
 
 #status-text {
@@ -199,4 +204,13 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+/* Add styles for the new add-time button */
+#add-time {
+    background-color: #6c757d;
+}
+
+#add-time:hover {
+    background-color: #5a6268;
 } 

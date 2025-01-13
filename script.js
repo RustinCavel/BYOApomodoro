@@ -12,6 +12,7 @@ const modeToggleButton = document.getElementById('mode-toggle');
 const modeIcon = document.getElementById('mode-icon');
 const themeToggle = document.getElementById('theme-toggle');
 const themeIcon = document.getElementById('theme-icon');
+const addTimeButton = document.getElementById('add-time');
 
 const WORK_TIME = 25 * 60; // 25 minutes in seconds
 const BREAK_TIME = 5 * 60; // 5 minutes in seconds
@@ -70,8 +71,11 @@ function switchMode() {
 }
 
 function updateButtonVisibility() {
-    startButton.style.display = timerId === null ? 'block' : 'none';
-    pauseButton.style.display = timerId !== null ? 'block' : 'none';
+    if (timerId === null) {
+        startButton.textContent = 'Start';
+    } else {
+        startButton.textContent = 'Pause';
+    }
 }
 
 function toggleTheme() {
@@ -94,8 +98,13 @@ updateDisplay();
 updateButtonVisibility();
 
 // Event listeners
-startButton.addEventListener('click', startTimer);
-pauseButton.addEventListener('click', pauseTimer);
+startButton.addEventListener('click', () => {
+    if (timerId === null) {
+        startTimer();
+    } else {
+        pauseTimer();
+    }
+});
 resetButton.addEventListener('click', resetTimer);
 modeToggleButton.addEventListener('click', () => {
     clearInterval(timerId);
@@ -103,6 +112,10 @@ modeToggleButton.addEventListener('click', () => {
     switchMode();
 });
 themeToggle.addEventListener('change', toggleTheme);
+addTimeButton.addEventListener('click', () => {
+    timeLeft += 5 * 60; // Add 5 minutes (300 seconds)
+    updateDisplay();
+});
 
 initializeTheme();
 
