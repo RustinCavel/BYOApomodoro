@@ -10,6 +10,8 @@ const resetButton = document.getElementById('reset');
 const statusText = document.getElementById('status-text');
 const modeToggleButton = document.getElementById('mode-toggle');
 const modeIcon = document.getElementById('mode-icon');
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
 
 const WORK_TIME = 25 * 60; // 25 minutes in seconds
 const BREAK_TIME = 5 * 60; // 5 minutes in seconds
@@ -72,6 +74,18 @@ function updateButtonVisibility() {
     pauseButton.style.display = timerId !== null ? 'block' : 'none';
 }
 
+function toggleTheme() {
+    const newTheme = themeToggle.checked ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+}
+
+function initializeTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeToggle.checked = savedTheme === 'dark';
+}
+
 // Initialize
 timeLeft = WORK_TIME;
 modeIcon.className = 'fas fa-sun';
@@ -87,4 +101,10 @@ modeToggleButton.addEventListener('click', () => {
     clearInterval(timerId);
     timerId = null;
     switchMode();
-}); 
+});
+themeToggle.addEventListener('change', toggleTheme);
+
+initializeTheme();
+
+// Call this when the page loads
+initializeTheme(); 
