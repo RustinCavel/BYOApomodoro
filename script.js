@@ -9,6 +9,7 @@ const pauseButton = document.getElementById('pause');
 const resetButton = document.getElementById('reset');
 const statusText = document.getElementById('status-text');
 const modeToggleButton = document.getElementById('mode-toggle');
+const modeIcon = document.getElementById('mode-icon');
 
 const WORK_TIME = 25 * 60; // 25 minutes in seconds
 const BREAK_TIME = 5 * 60; // 5 minutes in seconds
@@ -17,26 +18,9 @@ function updateDisplay() {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
     
+    // Add leading zeros if needed
     minutesDisplay.textContent = minutes.toString().padStart(2, '0');
     secondsDisplay.textContent = seconds.toString().padStart(2, '0');
-}
-
-function switchMode() {
-    isWorkTime = !isWorkTime;
-    timeLeft = isWorkTime ? WORK_TIME : BREAK_TIME;
-    statusText.textContent = isWorkTime ? 'Work Time' : 'Break Time';
-    modeToggleButton.textContent = isWorkTime ? 'Switch to Break' : 'Switch to Work';
-    updateDisplay();
-}
-
-function updateButtonVisibility() {
-    if (timerId === null) {
-        startButton.classList.remove('hidden');
-        pauseButton.classList.add('hidden');
-    } else {
-        startButton.classList.add('hidden');
-        pauseButton.classList.remove('hidden');
-    }
 }
 
 function startTimer() {
@@ -68,13 +52,30 @@ function resetTimer() {
     timerId = null;
     isWorkTime = true;
     timeLeft = WORK_TIME;
-    statusText.textContent = 'Work Time';
+    modeIcon.className = 'fas fa-sun';
+    modeIcon.title = 'Switch to Break';
     updateDisplay();
     updateButtonVisibility();
 }
 
+function switchMode() {
+    isWorkTime = !isWorkTime;
+    timeLeft = isWorkTime ? WORK_TIME : BREAK_TIME;
+    modeIcon.className = isWorkTime ? 'fas fa-sun' : 'fas fa-moon';
+    modeIcon.title = isWorkTime ? 'Switch to Break' : 'Switch to Work';
+    updateDisplay();
+    updateButtonVisibility();
+}
+
+function updateButtonVisibility() {
+    startButton.style.display = timerId === null ? 'block' : 'none';
+    pauseButton.style.display = timerId !== null ? 'block' : 'none';
+}
+
 // Initialize
 timeLeft = WORK_TIME;
+modeIcon.className = 'fas fa-sun';
+modeIcon.title = 'Switch to Break';
 updateDisplay();
 updateButtonVisibility();
 
